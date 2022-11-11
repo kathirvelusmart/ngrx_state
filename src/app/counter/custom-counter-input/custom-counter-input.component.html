@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="row mt-3">
+        <div class="my-3">Project is {{_projectname$ | async}}</div>
+        <input type="text" [(ngModel)]="value" class="form-control" placeholder="Enter counter value" />
+        <button (click)="onAdd()" class="btn btn-primary mt-3" type="submit">Add</button>
+    </div>
+    <div class="row mt-3">
+        <input type="text" class="form-control" [(ngModel)]="changedProjectName" placeholder="Enter project name">
+        <button (click)="onChangeText()" class="btn btn-primary mt-3" type="button">Change</button>
+    </div>
+</div>
