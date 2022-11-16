@@ -13,12 +13,13 @@
             </thead>
             <tbody>
                 <tr *ngFor="let post of postsData">
-                    <td>{{post.id}}</td>
-                    <td>{{post.title}}</td>
-                    <td>{{post.description}}</td>
+                    <td>{{post?.id}}</td>
+                    <td>{{post?.title}}</td>
+                    <td>{{post?.description}}</td>
                     <td>
-                        <a class="m-1 btn btn-success" [routerLink]="['edit',post.id]">Update</a>
-                        <a class="m-1 btn btn-danger" (click)="onDeletePost(post.id)">Delete</a>
+                        <a class="m-1 btn btn-success" [routerLink]="['edit',post?.id]">Update</a>
+                        <a class="m-1 btn btn-danger" (click)="onDeletePost(post?.id)">Delete</a>
+                        <a class="m-1 btn btn-warning" [routerLink]="['details',post?.id]">Details</a>
                     </td>
                 </tr>
             </tbody>

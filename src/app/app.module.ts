@@ -11,9 +11,13 @@ import { HomeComponent } from './home/home.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { EffectsModule } from '@ngrx/effects';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
 import { appReducer } from './app.state';
+import { AuthEffects } from './auth/state/auth.effects';
+import { AuthTokenInterceptor } from './service/authToken.interceptor';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomSerializer } from './router/custom.serializer';
 
 @NgModule({
   declarations: [
@@ -31,13 +35,16 @@ import { appReducer } from './app.state';
     // links reducers here
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
-      //Rescrit the logOnly in production mode
+      //Resrict the logOnly in production mode
       logOnly: environment.production
     }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthEffects]),
     HttpClientModule,
+    StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer }),
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
